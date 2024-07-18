@@ -7,8 +7,31 @@ class Enigma:
         self.r3 = r3
         self.plugboard = pb
         self.keyboard = kb
+        
+    def set_key(self, key):
+        self.r1.rotate_to_letter(key[0])
+        self.r2.rotate_to_letter(key[1])
+        self.r3.rotate_to_letter(key[2])
 
     def encipher(self, letter): 
+        
+        #rotate the rotors
+        if self.r2.left[0] == self.r2.notch and self.r3.left[0] == self.r3.notch:
+            self.r1.rotate()
+            self.r2.rotate()
+            self.r3.rotate()
+        elif self.r2.left[0] == self.r2.notch:
+            self.r1.rotate()
+            self.r2.rotate()
+            self.r3.rotate()
+        elif self.r3.left[0] == self.r3.notch: 
+            self.r2.rotate()
+            self.r3.rotate()
+        else:
+            self.r3.rotate()
+            
+            
+        #encipher
         signal = self.keyboard.forward(letter)
         signal = self.plugboard.forward(signal)
         signal = self.r3.forward(signal)
@@ -23,4 +46,4 @@ class Enigma:
         signal = self.plugboard.backward(signal)
     
         letter = self.keyboard.backward(signal)
-        print(letter)
+        return letter

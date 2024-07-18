@@ -27,6 +27,12 @@ plugboard = Plugboard(["AR", "GK", "OX"])
 
 letter = "A"
 
-enigma = Enigma(A, I, II, III, plugboard, keyboard)
+enigma = Enigma(B, I, II, III, plugboard, keyboard)
+enigma.set_key("DOG")
 
-enigma.encipher("A")
+message = "TEST"
+cipher_text = ""
+for letter in message:
+    cipher_text = cipher_text + enigma.encipher(letter)
+
+print(cipher_text)
