@@ -29,8 +29,11 @@ letter = "A"
 
 enigma = Enigma(B, I, II, III, plugboard, keyboard)
 enigma.set_key("DOG")
+enigma.set_rings((1, 2, 3))
 
-message = "TEST"
+message = (
+    "TESTINGTESTINGTESTINGTESTINGTESTINGTESTINGTESTINGTESTINGTESTINGTESTINGTESTING"
+)
 cipher_text = ""
 for letter in message:
     cipher_text = cipher_text + enigma.encipher(letter)
