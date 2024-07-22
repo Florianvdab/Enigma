@@ -1,3 +1,6 @@
+import pygame
+
+
 class Rotor:
 
     def __init__(self, wiring, notch) -> None:
@@ -40,3 +43,31 @@ class Rotor:
         # adjust the turnover notch in relationship to the wiring
         notch_pos = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".find(self.notch)
         self.notch = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[(notch_pos - ring_pos + 1) % 26]
+
+    def draw(self, screen, x, y, w, h, font):
+        # rectangle
+        r = pygame.Rect(x, y, w, h)
+        pygame.draw.rect(screen, "white", r, width=2, border_radius=15)
+
+        for i in range(26):
+
+            # left hand side
+            letter = self.left[i]
+            letter = font.render(letter, True, "grey")
+            text_box = letter.get_rect(center=(x + w / 4, y + (i + 1) * h / 27))
+
+            # highlight top letter
+            if i == 0:
+                pygame.draw.rect(screen, "teal", text_box, border_radius=5)
+
+            # highlight turnover notch
+            if self.left[i] == self.notch:
+                letter = font.render(self.notch, True, "#333333")
+                pygame.draw.rect(screen, "white", text_box, border_radius=5)
+                
+            screen.blit(letter, text_box)
+
+            letter = self.right[i]
+            letter = font.render(letter, True, "grey")
+            text_box = letter.get_rect(center=(x + w * 3 / 4, y + (i + 1) * h / 27))
+            screen.blit(letter, text_box)
